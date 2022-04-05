@@ -15,13 +15,13 @@ const Chat = ({ location }) =>
     
     const ENDPOINT = 'localhost:5000';
     
-    const parsed = queryString.parse(location.search);
+    
 
 
 
     useEffect(() => {
         
-        const { name, room } = queryString.parse(parsed.location.search);
+        const { name, room } = queryString.parse(location.search);
         socket = io(ENDPOINT);
     
         setRoom(room);
