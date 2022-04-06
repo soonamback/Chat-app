@@ -4,6 +4,11 @@ import queryString from 'query-string';
 //const queryString = require('query-string');
 import io from 'socket.io-client'
 
+
+import TextContainer from '../TextContainer/TextContainer';
+import Messages from '../Messages/Messages';
+import InfoBar from '../InfoBar/InfoBar';
+import Input from '../Input/Input';
 import './Chat.css';
 
 let socket;
@@ -17,6 +22,7 @@ const Chat = ({ location }) =>
     //const parsed = queryString.parse(location.search)
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
+    const [users, setUsers] = useState('');
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     
@@ -45,7 +51,7 @@ const Chat = ({ location }) =>
             setMessages(messages => [...messages, message]);
         })
         
-    }, [messages]);
+    },[]);
 
     const sendMessage = (event) => {
         event.preventDefault();
@@ -57,16 +63,14 @@ const Chat = ({ location }) =>
     console.log(message, messages);
     return (
         <div className="outerContainer">
-        <div className="container">
-        <input 
-        value={message}
-        onChange={(event) => setMessage(event.target.value)}
-        onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null} />
-        
+          <div className="container">
+              <InfoBar room={room} />
+              <Messages messages={messages} name={name} />
+              <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
+          </div>
+          <TextContainer users={users}/>
         </div>
-        </div>
-
-    )
+      );
 }
 
 export default Chat;
